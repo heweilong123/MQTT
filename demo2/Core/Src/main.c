@@ -96,12 +96,6 @@ int main(void)
   MX_DMA_Init();
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
-	HAL_Delay(1000);
-  MY_CMD_INIT();
-	printf("CMD INIT OVER\r\n");
-  MY_WIFI_INIT();
-	printf("WIFI INIT OVER\r\n");
-	HAL_Delay(1000);
   /* USER CODE END 2 */
 
   /* Init scheduler */

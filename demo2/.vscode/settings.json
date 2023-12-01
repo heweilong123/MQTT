@@ -15,7 +15,9 @@
         "task.h": "c",
         "usart.h": "c",
         "string.h": "c",
-        "dev8266.h": "c"
+        "dev8266.h": "c",
+        "limits": "c",
+        "memory": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

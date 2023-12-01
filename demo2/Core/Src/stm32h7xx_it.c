@@ -39,12 +39,10 @@ uint8_t tx_buffer_cmd[200] = {0};
 ALIGN_32BYTES ( unsigned char   tx_buffer_cmd[200]) __attribute__((section(".ARM.__at_0x380000E0")));
 
 uint8_t rx_len_wifi =  0;
-uint8_t rx_buffer_wifi[255] = {0};
-ALIGN_32BYTES ( unsigned char   rx_buffer_wifi[255]) __attribute__((section(".ARM.__at_0x24000000")));
-uint8_t tx_buffer_wifi[255] = {0};
-ALIGN_32BYTES ( unsigned char   tx_buffer_wifi[255]) __attribute__((section(".ARM.__at_0x24000100")));
-uint8_t rx_data_wifi[255] = {0};
-uint8_t rx_flag = 0;
+uint8_t rx_buffer_wifi[1024] = {0};
+ALIGN_32BYTES ( unsigned char   rx_buffer_wifi[1024]) __attribute__((section(".ARM.__at_0x24000000")));
+uint8_t rx_data_wifi[1024] = {0};
+uint32_t rx_flag_wifi = 0;
 /* USER CODE END TD */
 
 /* Private define ------------------------------------------------------------*/
@@ -75,6 +73,7 @@ uint8_t rx_flag = 0;
 /* External variables --------------------------------------------------------*/
 extern DMA_HandleTypeDef hdma_lpuart1_rx;
 extern DMA_HandleTypeDef hdma_lpuart1_tx;
+extern DMA_HandleTypeDef hdma_usart3_rx;
 extern UART_HandleTypeDef hlpuart1;
 extern UART_HandleTypeDef huart3;
 extern TIM_HandleTypeDef htim17;
@@ -189,37 +188,30 @@ void DebugMon_Handler(void)
 /******************************************************************************/
 
 /**
+  * @brief This function handles DMA1 stream0 global interrupt.
+  */
+void DMA1_Stream0_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA1_Stream0_IRQn 0 */
+  HAL_UART_DMAStop(&huart3);
+  /* USER CODE END DMA1_Stream0_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_usart3_rx);
+  /* USER CODE BEGIN DMA1_Stream0_IRQn 1 */
+  HAL_UART_Receive_DMA(&huart3, rx_buffer_wifi, sizeof(rx_buffer_wifi)); 
+  /* USER CODE END DMA1_Stream0_IRQn 1 */
+}
+
+/**
   * @brief This function handles USART3 global interrupt.
   */
 void USART3_IRQHandler(void)
 {
   /* USER CODE BEGIN USART3_IRQn 0 */
-  uint32_t tmp_flag = 0;
-	uint32_t temp;
-  
-	tmp_flag =__HAL_UART_GET_FLAG(&huart3,UART_FLAG_IDLE);
-	
-	if((tmp_flag != RESET))
-	{ 
-		__HAL_UART_CLEAR_IDLEFLAG(&huart3);
-		
-		temp  = __HAL_DMA_GET_COUNTER(&hdma_usart3_rx);
-		//DMAֹͣ
-		HAL_UART_DMAStop(&huart3);
 
-		//clear last data
-    memset(rx_data_wifi, 0x00, rx_len_wifi);
-		
-		rx_len_wifi =  sizeof(rx_buffer_wifi) - temp;
-
-		memcpy(rx_data_wifi, rx_buffer_wifi, rx_len_wifi);
-    rx_flag = 1;
-		//printf("%s\r\n", rx_data_wifi);
-	}
   /* USER CODE END USART3_IRQn 0 */
   HAL_UART_IRQHandler(&huart3);
   /* USER CODE BEGIN USART3_IRQn 1 */
-  HAL_UART_Receive_DMA(&huart3, rx_buffer_wifi, sizeof(rx_buffer_wifi));
+  
   /* USER CODE END USART3_IRQn 1 */
 }
 
@@ -282,7 +274,7 @@ void LPUART1_IRQHandler(void)
 		
 		temp  = __HAL_DMA_GET_COUNTER(&hdma_lpuart1_rx);
 		
-		//DMAֹͣ
+		//DMA??
 		HAL_UART_DMAStop(&hlpuart1);
 		
 		rx_len_cmd =  200 - temp; 

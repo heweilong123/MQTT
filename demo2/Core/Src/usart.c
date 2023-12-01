@@ -34,9 +34,9 @@ extern uint8_t rx_buffer_cmd[200];
 extern uint8_t tx_buffer_cmd[200];
 
 extern uint8_t rx_len_wifi;  
-extern uint8_t rx_buffer_wifi[255];
-extern uint8_t rx_data_wifi[255];
-extern uint8_t rx_flag;
+extern uint8_t rx_buffer_wifi[1024];
+extern uint8_t rx_data_wifi[1024];
+extern uint8_t rx_flag_wifi;
 /* USER CODE END 0 */
 
 UART_HandleTypeDef hlpuart1;
@@ -251,7 +251,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     hdma_usart3_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
     hdma_usart3_rx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
     hdma_usart3_rx.Init.Mode = DMA_NORMAL;
-    hdma_usart3_rx.Init.Priority = DMA_PRIORITY_LOW;
+    hdma_usart3_rx.Init.Priority = DMA_PRIORITY_VERY_HIGH;
     hdma_usart3_rx.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
     if (HAL_DMA_Init(&hdma_usart3_rx) != HAL_OK)
     {
@@ -344,7 +344,7 @@ void MY_UART_Transmit(unsigned char* data, unsigned char len)
   BDMA_Channel_TypeDef * bdma = hdma_lpuart1_tx.Instance;
   while(bdma->CNDTR != 0);
   USART_TypeDef * usart = hlpuart1.Instance;
-  while((usart->ISR & (1<<6)) == (1<<6));
+  while((usart->ISR & (1<<6)) != (1<<6));
 }
 
 void MY_CMD_INIT(void)
@@ -356,12 +356,6 @@ void MY_CMD_INIT(void)
 
 void MY_WIFI_INIT(void)
 {
-	__HAL_UART_ENABLE_IT(&huart3, UART_IT_IDLE);
   HAL_UART_Receive_DMA(&huart3, rx_buffer_wifi, sizeof(rx_buffer_wifi));
-  HAL_Delay(100);
-  // unsigned char usart3Send[] = "AT+RST\r\n";
-  // HAL_UART_Transmit(&huart3, usart3Send, sizeof(usart3Send),0xff);
-  Wifi_Serial(&huart3, rx_data_wifi, &rx_len_wifi, &rx_flag);
-  Wifi_Reset();
 }
 /* USER CODE END 1 */

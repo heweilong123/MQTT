@@ -1,0 +1,56 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "browse": {
+                "path": [
+                    "${workspaceFolder}/",
+                    "${workspaceFolder}/Core/Inc",
+                    "${workspaceFolder}/Drivers/CMSIS/Device/ST/STM32H7xx/Include",
+                    "${workspaceFolder}/Drivers/CMSIS/Include",
+                    "${workspaceFolder}/Drivers/STM32H7xx_HAL_Driver/Inc",
+                    "${workspaceFolder}/Drivers/STM32H7xx_HAL_Driver/Inc/Legacy",
+                    "${workspaceFolder}/MDK-ARM/RTE/_demo",
+                    "${workspaceFolder}/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2",
+                    "${workspaceFolder}/Middlewares/Third_Party/FreeRTOS/Source/include",
+                    "${workspaceFolder}/Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F",
+                    "D:/Keil_v5/ARM/ARMCC/include",
+                    "${workspaceFolder}/MyDrivers/Dev8266",
+                    "${workspaceFolder}/MyDrivers/MQTT",
+                    "${workspaceFolder}/MyDrivers/BoardLed"
+                ],
+                "limitSymbolsToIncludedHeaders": true
+            },
+            "includePath": [
+                "${workspaceFolder}/",
+                "${workspaceFolder}/Core/Inc",
+                "${workspaceFolder}/Drivers/CMSIS/Device/ST/STM32H7xx/Include",
+                "${workspaceFolder}/Drivers/CMSIS/Include",
+                "${workspaceFolder}/Drivers/STM32H7xx_HAL_Driver/Inc",
+                "${workspaceFolder}/Drivers/STM32H7xx_HAL_Driver/Inc/Legacy",
+                "${workspaceFolder}/MDK-ARM/RTE/_demo",
+                "${workspaceFolder}/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2",
+                "${workspaceFolder}/Middlewares/Third_Party/FreeRTOS/Source/include",
+                "${workspaceFolder}/Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F",
+                "D:/Keil_v5/ARM/ARMCC/include",
+                "${workspaceFolder}/MyDrivers/Dev8266",
+                "${workspaceFolder}/MyDrivers/MQTT",
+                "${workspaceFolder}/MyDrivers/BoardLed"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE",
+                "__CC_ARM",
+                "USE_STDPERIPH_DRIVER",
+                "STM32F10X_HD"
+            ],
+            
+            "compilerPath": "D:\\software\\LLVM\\bin\\clang-format.exe",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "clang-x64"
+        }
+    ],
+    "version": 4
+}

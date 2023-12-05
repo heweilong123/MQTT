@@ -39,3 +39,8 @@ API使用文档  https://open.iot.10086.cn/doc/v5/develop/detail/607
 url APIKEY  
 URL参数 参数=topic  参数值=订阅的主题名字    
 HTTP请求参数  发送的信息
+
+
+## demo6
+
+8266 连接onenet MQTT 订阅 收到“test” 主题的数据后 取消订阅

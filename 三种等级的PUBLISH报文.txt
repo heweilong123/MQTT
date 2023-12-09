@@ -1,0 +1,115 @@
+
+/***************************QOS0***************************/
+.........................Send one mqtt packet.........................
+
+FixHeader{
+PacketTag = 48
+PacketType  = 3
+RemainLength  = 18
+}
+VariableHeaderPublish{
+topic_name_len_= 5
+topic_name= topic
+}
+PayloadPublish{
+payload_= 0x74 0x6F 0x70 0x69 0x63 0x20 0x68 0x65 0x6C 0x6C 0x6F 
+}
+
+MQTT:0x30 0x12 0x00 0x05 0x74 0x6F 0x70 0x69 0x63 0x74 0x6F 0x70 0x69 0x63 0x20 0x68 0x65 0x6C 0x6C 0x6F 
+
+Send One Packet Succ:
+.........................Send one mqtt packet.........................
+
+
+
+/***************************QOS1***************************/
+FixHeader{
+PacketTag = 50
+PacketType  = 3
+RemainLength  = 20
+}
+VariableHeaderPublish{
+topic_name_len_= 5
+topic_name= topic
+packet_identifier_= 1
+}
+PayloadPublish{
+payload_= 0x74 0x6F 0x70 0x69 0x63 0x20 0x68 0x65 0x6C 0x6C 0x6F 
+}
+
+MQTT:0x32 0x14 0x00 0x05 0x74 0x6F 0x70 0x69 0x63 0x00 0x01 0x74 0x6F 0x70 0x69 0x63 0x20 0x68 0x65 0x6C 0x6C 0x6F 
+Send One Packet Succ:
+.........................recv publish ack packet.........................
+
+FixHeader{
+PacketTag = 64
+PacketType  = 4
+RemainLength  = 2
+}
+VariableHeaderPubAck{
+packet_identifier_= 1
+}
+
+Publish Ack:0x40 0x02 0x00 0x01 
+
+.........................Send one mqtt packet.........................
+
+FixHeader{
+PacketTag = 52
+PacketType  = 3
+RemainLength  = 20
+}
+VariableHeaderPublish{
+topic_name_len_= 5
+topic_name= topic
+packet_identifier_= 1
+}
+PayloadPublish{
+payload_= 0x74 0x6F 0x70 0x69 0x63 0x20 0x68 0x65 0x6C 0x6C 0x6F 
+}
+
+
+/***************************QOS2***************************/
+MQTT:0x34 0x14 0x00 0x05 0x74 0x6F 0x70 0x69 0x63 0x00 0x01 0x74 0x6F 0x70 0x69 0x63 0x20 0x68 0x65 0x6C 0x6C 0x6F 
+
+Send One Packet Succ:
+.........................recv publish rec packet.........................
+
+FixHeader{
+PacketTag = 80
+PacketType  = 5
+RemainLength  = 2
+}
+VariableHeaderPubRec{
+packet_identifier_= 1
+}
+
+ Publish Rec:0x50 0x02 0x00 0x01 
+
+.........................Send one mqtt packet.........................
+
+FixHeader{
+PacketTag = 98
+PacketType  = 6
+RemainLength  = 2
+}
+VariableHeaderPubRel{
+packet_identifier_= 1
+}
+
+MQTT:0x62 0x02 0x00 0x01 
+
+Send One Packet Succ:
+.........................recv publish comp packet.........................
+
+FixHeader{
+PacketTag = 112
+PacketType  = 7
+RemainLength  = 2
+}
+VariableHeaderPubComp{
+packet_identifier_= 1
+}
+
+Publish Comp:0x70 0x02 0x00 0x01 
+

@@ -54,3 +54,7 @@ qos1
 ## demo6
 
 8266 连接onenet MQTT 订阅 收到“test” 主题的数据后 取消订阅
+
+## demo7
+
+收到“test” 主题的数据后  通过“topic“发布
